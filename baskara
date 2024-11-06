@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Bhaskara</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            color: #555;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .input-group input[type="button"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .input-group input[type="button"]:hover {
+            background-color: #45a049;
+        }
+        .resultado {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 16px;
+        }
+        .resultado p {
+            font-weight: bold;
+            color: #333;
+        }
+        .resultado .erro {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Fórmula de Bhaskara</h1>
+        
+        <!-- Formulário para os coeficientes -->
+        <div class="input-group">
+            <label for="a">Coeficiente a:</label>
+            <input type="number" id="a" placeholder="Digite o coeficiente a" required>
+        </div>
+
+        <div class="input-group">
+            <label for="b">Coeficiente b:</label>
+            <input type="number" id="b" placeholder="Digite o coeficiente b" required>
+        </div>
+
+        <div class="input-group">
+            <label for="c">Coeficiente c:</label>
+            <input type="number" id="c" placeholder="Digite o coeficiente c" required>
+        </div>
+
+        <!-- Botão para calcular -->
+        <div class="input-group">
+            <input type="button" value="Calcular" onclick="calcularBhaskara()">
+        </div>
+
+        <!-- Resultado -->
+        <div id="resultado" class="resultado"></div>
+    </div>
+
+    <script>
+        function calcularBhaskara() {
+            // Coletando os valores dos coeficientes
+            var a = parseFloat(document.getElementById('a').value);
+            var b = parseFloat(document.getElementById('b').value);
+            var c = parseFloat(document.getElementById('c').value);
+            var resultadoDiv = document.getElementById('resultado');
+
+            // Verificar se os valores de a, b e c são válidos
+            if (isNaN(a) || isNaN(b) || isNaN(c)) {
+                resultadoDiv.innerHTML = "<p class='erro'>Por favor, insira valores válidos para a, b e c.</p>";
+                return;
+            }
+
+            // Calculando o discriminante (Δ = b² - 4ac)
+            var delta = b * b - 4 * a * c;
+
+            // Verificando o valor de Δ
+            if (delta > 0) {
+                var x1 = (-b + Math.sqrt(delta)) / (2 * a); // Raiz 1
+                var x2 = (-b - Math.sqrt(delta)) / (2 * a); // Raiz 2
+                resultadoDiv.innerHTML = `<p>As raízes são: <br>x1 = ${x1.toFixed(2)} <br>x2 = ${x2.toFixed(2)}</p>`;
+            } else if (delta === 0) {
+                var x = -b / (2 * a); // Única raiz
+                resultadoDiv.innerHTML = `<p>A única raiz é: x = ${x.toFixed(2)}</p>`;
+            } else {
+                // Raízes complexas
+                var realParte = -b / (2 * a);
+                var imaginarioParte = Math.sqrt(-delta) / (2 * a);
+                resultadoDiv.innerHTML = `<p>As raízes são complexas: <br>x1 = ${realParte.toFixed(2)} + ${imaginarioParte.toFixed(2)}i <br>x2 = ${realParte.toFixed(2)} - ${imaginarioParte.toFixed(2)}i</p>`;
+            }
+        }
+    </script>
+
+</body>
+</html>
